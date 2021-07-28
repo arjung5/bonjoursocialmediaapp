@@ -19,6 +19,9 @@
   "homepage": "https://github.com/arjung5/bonjoursocialmediaapp#readme",
   "dependencies": {
     "ejs": "^3.1.6",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "express-ejs-layouts": "^2.5.1",
+    "express-layouts": "^1.0.0",
+    "mongoose": "^5.13.3"
   }
 }
