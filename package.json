@@ -1,0 +1,24 @@
+{
+  "name": "bonjour",
+  "version": "1.0.0",
+  "description": "This is a social media web app",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arjung5/bonjoursocialmediaapp.git"
+  },
+  "author": "Arjun Gagr",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arjung5/bonjoursocialmediaapp/issues"
+  },
+  "homepage": "https://github.com/arjung5/bonjoursocialmediaapp#readme",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1"
+  }
+}
