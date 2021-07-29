@@ -1,7 +1,22 @@
+<link rel="stylesheet" href="/css/_header.css"/>
 <header>
-    <div style="padding-left:20px">
+    <div class="header">
+        <a href="#default" class="logo">CompanyLogo</a>
+        <div class="header-right">
+            <% if(locals.user) {%>
+                <a class="active" href="/users/profile/<%= user.id %>"><%= user.name %></a>
+                <a href="/users/sign-out">Sign Out</a>
+                <a href="/posts">Posts</a>
+            <%} else {%>
+                <a class="active" href="/users/sign-in">Sign In</a>
+                <a href="/users/sign-up">Sign Up</a>
+            <%}%>
+          <a href="/">Home</a>
+        </div>
+      </div>
+      <!-- <div style="padding-left:20px">
         <h1>Responsive Header</h1>
         <p>Resize the browser window to see the effect.</p>
         <p>Some content..</p>
-      </div>
+      </div> -->
 </header>

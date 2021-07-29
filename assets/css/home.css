@@ -1,3 +1,18 @@
 body{
     background-color: red;
 }
+#home-page{
+    display: flex;
+}
+#home-page-left
+{
+    width: 60%;
+    padding:10px;
+    height: 100%;
+}
+#home-page-right
+{
+    width:40%;
+    padding: 10px;
+    border-left: 2px solid lightgrey;
+}

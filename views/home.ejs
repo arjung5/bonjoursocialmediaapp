@@ -1,2 +1,29 @@
 <link rel="stylesheet" href="/css/home.css"/>
 <p>this is home page</p>
+
+<div id="home-page">
+    <div id="home-page-left">
+        <% if(locals.user) { %>
+           <p>
+               <%= user.name %>
+           </p>
+           <p>
+            <%= user.email %>
+        </p>
+        <% } %>
+    </div>
+    <div id="home-page-right">
+        <% if(locals.user) { %>
+            <% for(let users of users_list){ %>
+                <p><%= users.name %></p>
+                <p><%= users.email %></p>
+                <p><a href="/users/profile/<%= users.id %>">Profile<a></p>
+            <% } %>
+        <% } %>
+    </div>
+</div>
+
+
+
+
+
