@@ -78,15 +78,22 @@ module.exports.createComment=async (req,res)=>{
         try
         {
             let post=await Post.findById(req.body.postId);
-            let createCommet=await Comment.create({
-                                     postId:req.body.postId,
-                                     content:req.body.content,
-                                     user:req.user.id
-                                     });
-            console.log(`This is value of Post ${post}`);
-            post.comments.push(createCommet);
-            post.save();
-            return res.redirect('back');
+            if(post)
+            {
+                let createCommet=await Comment.create({
+                    postId:req.body.postId,
+                    content:req.body.content,
+                    user:req.user.id
+                    });
+                console.log(`This is value of Post ${post}`);
+                post.comments.push(createCommet);
+                post.save();
+                return res.redirect('back');
+            }
+            else{
+                return res.redirect('back');
+            }
+            
         }
         catch(err)
         {
