@@ -37,11 +37,13 @@ module.exports.createUser=(req,res)=>{
                 console.log(`There is error in fetching the list of users : ${err}`);
                 return;
             }
-            return res.redirect('/sign-in');
+            req.flash('success','Congratulations Welcome');
+            return res.redirect('/users/sign-in');
         })
     }
     else
     {
+        req.flash('error','Password does not match , try again!');
         return res.redirect('back');
     }
 };
@@ -111,6 +113,7 @@ module.exports.ProfileUpdate=(req,res)=>{
             }
             else
             {
+                req.flash('success','Profile Has Been Updated'); 
                 return res.redirect('back');
             }
         })
