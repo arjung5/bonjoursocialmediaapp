@@ -1,0 +1,18 @@
+<div>
+    <% if(locals.user) { %>
+        <form action="/post/comment" method="POST">
+          <textarea  placeholder="type here ........" cols="80" rows="1" name="content"></textarea>
+          <input type="hidden" name="postId" value="<%= post.id %>"/>
+          <button type="submit" >Comment</button>
+        </form>
+     <% } %>
+     <div style="margin-left: 10px;padding-left: 10px;">
+        <ul>
+            <% for(comment of post.comments) { %>
+               <li> <p><%= comment.content  %>
+                <small  style="display: block;"><%= comment.user.name %></small></p></li>
+            <% } %>
+        </ul>
+
+     </div>
+</div>

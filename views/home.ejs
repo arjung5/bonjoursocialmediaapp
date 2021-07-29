@@ -3,14 +3,15 @@
 
 <div id="home-page">
     <div id="home-page-left">
-        <% if(locals.user) { %>
-           <p>
-               <%= user.name %>
-           </p>
-           <p>
-            <%= user.email %>
-        </p>
-        <% } %>
+      <% if(locals.user) { %>
+         <form action="/post/create" method="POST">
+           <textarea  placeholder="type here ........" cols="80" rows="10" name="content"></textarea>
+           <button type="submit" >Post</button>
+         </form>
+      <% } %>
+      <% for(post of post_List) { %>
+        <%- include('_post')%>
+      <% } %>
     </div>
     <div id="home-page-right">
         <% if(locals.user) { %>
