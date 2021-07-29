@@ -1,18 +1,57 @@
 const express= require('express');
-const app =express();
-const expressLayouts=require('express-ejs-layouts');
-const port=8000;
+const db=require('./config/mongoose-setup');
 
-app.use(express.static('./assets'));
-app
+
+const session=require('express-session');
+const passport=require('passport');
+const passportLocal=require('./config/passport-setup');
+
+
+
+const app =express();
+
+const port=8000;
+const expressLayouts=require('express-ejs-layouts');
+const cookieParser = require('cookie-parser');
 app.use(expressLayouts);
 app.set('layout extractStyles',true);
 app.set('layout extractScripts',true);
 
+app.use(express.static('./assets'));
+app.use(express.urlencoded());
+app.use(cookieParser());
 app.set('view engine','ejs');
 app.set('views','./views');
 
+const MongoStore = require('connect-mongo');
+app.use(session({
+    name:'bonjour',
+    //ToDo change the secret before deployemnt in production mode
+    secret:'arjungarg',
+    saveUninitialized:false,
+    resave:false,
+    cookie:{
+        maxAge:(1000*60*60)
+    },
+    store:MongoStore.create(
+        {
+        // mongooseConnection:db,
+        mongoUrl: 'mongodb://localhost/bonjourSocialApp',
+        autoRemove:'disabled'
+        },
+        function(err)
+        {
+        console.log(err || 'connect mongodb setup pk');
+        }
+    )
 
+}));
+
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(passport.setAuthenticatedUser);
 
 app.use('/',require('./routes'));
 
