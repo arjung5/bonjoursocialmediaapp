@@ -4,14 +4,18 @@
 <div id="home-page">
     <div id="home-page-left">
       <% if(locals.user) { %>
-         <form action="/post/create" method="POST">
-           <textarea  placeholder="type here ........" cols="80" rows="10" name="content"></textarea>
-           <button type="submit" >Post</button>
+         <form id="new-post-form" action="/post/create" method="POST">
+           <textarea  placeholder="type here ........" cols="80" rows="10" name="content" required></textarea>
+           <input type="submit" value="Post"/>          
          </form>
       <% } %>
-      <% for(post of post_List) { %>
-        <%- include('_post')%>
-      <% } %>
+      <div id="post-list-container">
+        <ul>
+          <% for(post of post_List) { %>
+            <%- include('_post')%>
+          <% } %>
+        </ul>
+      </div>
     </div>
     <div id="home-page-right">
         <% if(locals.user) { %>
@@ -23,7 +27,7 @@
         <% } %>
     </div>
 </div>
-
+<script src="/js/home_posts.js"></script>
 
 
 

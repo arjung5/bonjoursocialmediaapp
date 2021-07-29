@@ -3,6 +3,7 @@ const User = require('../models/user');
 const Comment=require('../models/comment');
 
 module.exports.createPost=async (req,res)=>{
+    console.log('Hey I have hit the controller');
     if(req.isAuthenticated())
     {
      try
@@ -11,6 +12,25 @@ module.exports.createPost=async (req,res)=>{
             content:req.body.content,
             user:req.user.id
        });
+
+       //Here we are checking that whether the request is from Ajax or not
+       //And we are doing it by checking type of request 
+       //To be ajax it must be :- XmlHttpRequest (xhr)
+       if(req.xhr)
+       {
+           //returning the json to ajax request
+           return res.status(200).json({
+               data:{
+                post : post 
+               },
+               message: 'Post created!'
+           }
+           //herer we are including a message with return json as its a general practise to do so
+          
+           )
+       }
+
+       req.flash('success','Post Has Been Created');
        return res.redirect('back');
      }
      catch(err)
@@ -20,7 +40,7 @@ module.exports.createPost=async (req,res)=>{
     
     
     //converting code to async/await as above
-    //    Post.create({
+    //    Post.create({ 
     //        content:req.body.content,
     //        user:req.user.id
     //    },(err,postData)=>{
@@ -85,7 +105,7 @@ module.exports.createComment=async (req,res)=>{
                     content:req.body.content,
                     user:req.user.id
                     });
-                console.log(`This is value of Post ${post}`);
+               // console.log(`This is value of Post ${post}`);
                 post.comments.push(createCommet);
                 post.save();
                 return res.redirect('back');
