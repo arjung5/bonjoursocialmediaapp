@@ -58,3 +58,29 @@ module.exports.createComment=(req,res)=>{
         }
     })
 };
+
+module.exports.destroyPost=(req,res)=>{
+
+    Post.findById(req.params.postId,(err,success)=>{
+        if(err)
+        {
+            console.log(`here is the error about the ${err}`)
+            return;
+        }
+        //.id means c 
+        if(success.user==req.user.id)
+        {
+           success.remove();
+           //console.log(`here is desired post ${success}`);
+           Comment.deleteMany({post:req.params.id},(err)=>{
+               if(err)
+               {
+                   console.log(`${err}`)
+                   return;
+               }
+               //console.log(`here is comment delete ${success}`);
+               return res.redirect('back');
+           })
+        }
+    })
+}

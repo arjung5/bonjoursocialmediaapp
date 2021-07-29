@@ -17,7 +17,7 @@ module.exports.homePage=(req,res)=>{
         }
         else
         {
-            console.log(dataPost);
+            //console.log(dataPost);
             User.find({},(err,data)=>{
                 if(err)
                 {

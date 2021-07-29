@@ -1,4 +1,7 @@
 <p><%= post.content %>
+    <% if(locals.user) {%>
+     <small><a href="/post/destroy/<%= post.id %>">x</a></small>
+    <% } %>
     <small  style="display: block;"><%= post.user.name %></small>
     <%- include('_comment') %>
  </p>
