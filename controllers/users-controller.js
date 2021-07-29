@@ -121,6 +121,7 @@ module.exports.signOut=(req,res)=>{
     if(req.isAuthenticated())
     {
         req.logout();
+        req.flash('success','You are Logout'); 
         return res.redirect('/');
     }
     else

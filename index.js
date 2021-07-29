@@ -9,7 +9,8 @@ const passportLocal=require('./config/passport-setup');
 
 
 const app =express();
-
+const flash=require('connect-flash');
+const customeMw=require('./config/middlewareCustom');
 const port=8000;
 const expressLayouts=require('express-ejs-layouts');
 const cookieParser = require('cookie-parser');
@@ -53,8 +54,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.setAuthenticatedUser);
 
-app.use('/',require('./routes'));
 
+app.use(flash());
+app.use(customeMw.setFlash);
+app.use('/',require('./routes'));
 
 app.listen(port,(err)=>{
     if(err)
