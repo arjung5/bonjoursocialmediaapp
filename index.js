@@ -1,20 +1,18 @@
 const express= require('express');
-
 const db=require('./config/mongoose-setup');
-
-
 const session=require('express-session');
 const passport=require('passport');
 const passportLocal=require('./config/passport-setup');
-
-
-
+const JwtStrategy=require('./config/passport-jwt');
 const app =express();
 const flash=require('connect-flash');
 const customeMw=require('./config/middlewareCustom');
 const port=8000;
 const expressLayouts=require('express-ejs-layouts');
 const cookieParser = require('cookie-parser');
+
+
+
 app.use(expressLayouts);
 app.set('layout extractStyles',true);
 app.set('layout extractScripts',true);
