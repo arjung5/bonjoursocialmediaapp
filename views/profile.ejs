@@ -1,9 +1,12 @@
 <div>
     <% if(locals.user.id == userData.id) {%>
+      <img src="<%= userData.avatar %>" alt="Image is not there" width="100" />
         <p><%= userData.name %></p>
         <p><%= userData.email %></p>
+
+
         <div style="margin: 10;">
-            <form action="/users/profile/update" method="POST" style="margin: 10;">
+            <form action="/users/profile/update" method="POST" enctype="multipart/form-data" style="margin: 10;">
               <lable for="email">Update Email</lable>
               <input type="email" id="email" name="email" value="<%= userData.email  %>"/>
               <br>
@@ -11,11 +14,14 @@
               <input type="text" id="name" name="name" value="<%= userData.name  %>"/>
               <input type="hidden" name="id" value="<%= userData.id %>">
               <br>
+              <input type="file" name="avatar" placeholder="Profile Picture"/>
+              <br>
               <button  type="submit">Submit</button>
             </form>
           </div>
 
     <% } else {%>
+      <img src="<%= userData.avatar %>" alt="Image is not there" width="100"/>
         <p><%= userData.name %></p>
         <p><%= userData.email %></p>
     <% }%>

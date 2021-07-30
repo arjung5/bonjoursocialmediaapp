@@ -1,6 +1,6 @@
-const { Console } = require('console');
 const User=require('../models/user');
-
+const fs=require('fs');
+const path=require('path')
 module.exports.users=(req,res)=>{
     // User.find({},(err,data)=>{
     //     if(err)
@@ -103,21 +103,71 @@ module.exports.Profile=(req,res)=>{
 }
 
 
-module.exports.ProfileUpdate=(req,res)=>{
+module.exports.ProfileUpdate=async (req,res)=>{
+    console.log('Uploading file controller');
+    console.log( req.user.id);
+   
     if(req.isAuthenticated())
     {
-        User.findByIdAndUpdate(req.user.id,{$set:{email:req.body.email,name:req.body.name}},(err,data)=>{
-            if(err){
-                console.log(`There is error in updating ${err}`);
-                return;
-            }
-            else
+        try
+        {
+            console.log(`Enter in if tag`);
+            let user=await User.findById(req.user.id);
+            User.uploadedAvatar(req,res,(err)=>
             {
-                req.flash('success','Profile Has Been Updated'); 
-                return res.redirect('back');
-            }
-        })
+                if(err)
+                {
+                    console.log(`************ Multer Error :${err}`);
+                }
+                else
+                {
+                    console.log(req.file);
+                    user.name=req.body.name;
+                    user.email=req.body.email;
+                    if(req.file)
+                    {
+                        if(user.avatar)
+                        {
+                            console.log(`This is value ${user.avatar}`);
+                            fs.unlinkSync(path.join(__dirname ,'..',user.avatar));
+                        }
+                        //This is just the path of the uploaded file in the avatar field in the user
+                        user.avatar=User.avatarPath+'/'+req.file.filename;
+                    }
+                    user.save();
+                    req.flash('success','Profile Has Been Updated'); 
+                    return res.redirect('back');   
+                }
+            });
+          
+        }
+        catch(err)
+        {
+            req.flash(`error','Some Error has occured : ${err}`); 
+            return  res.redirect('back');
+        }
     }
+    else
+    {
+        req.flash(`error','UnAuthorized`); 
+        return res.status(401).send('UnAuthorized');   
+    }
+
+    //converting code async to await
+    // if(req.isAuthenticated())
+    // {
+    //     User.findByIdAndUpdate(req.user.id,{$set:{email:req.body.email,name:req.body.name}},(err,data)=>{
+    //         if(err){
+    //             console.log(`There is error in updating ${err}`);
+    //             return;
+    //         }
+    //         else
+    //         {
+    //             req.flash('success','Profile Has Been Updated'); 
+    //             return res.redirect('back');
+    //         }
+    //     })
+    // }
 }
 
 module.exports.signOut=(req,res)=>{

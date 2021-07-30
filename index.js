@@ -1,4 +1,5 @@
 const express= require('express');
+
 const db=require('./config/mongoose-setup');
 
 
@@ -19,6 +20,7 @@ app.set('layout extractStyles',true);
 app.set('layout extractScripts',true);
 
 app.use(express.static('./assets'));
+app.use('/uploads',express.static(__dirname + '/uploads'));
 app.use(express.urlencoded());
 app.use(cookieParser());
 app.set('view engine','ejs');
