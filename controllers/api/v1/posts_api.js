@@ -23,13 +23,23 @@ module.exports.index=async (req,res)=>{
  module.exports.destroy=async (req,res)=>{
     try
     {
-        let post=await Post.findById(req.params.postId)
-        post.remove();
-        await Comment.deleteMany({post:req.params.postId});
 
-        return res.json(200,({
-            message:'Post and comment are deleted succeefully'
-        }))
+        let post=await Post.findById(req.params.postId);
+        if(post.user == req.user.id)
+        {
+            post.remove();
+            await Comment.deleteMany({post:req.params.postId});
+    
+            return res.json(200,({
+                message:'Post and comment are deleted succeefully'
+            }))
+        }else
+        {
+            return res.json(401,{
+                messgae:'UnAuthorised;'
+            })
+        }
+
         // if(req.xhr)
         // {
         //     return res.status(200).json(({

@@ -28,7 +28,7 @@ const MongoStore = require('connect-mongo');
 app.use(session({
     name:'bonjour',
     //ToDo change the secret before deployemnt in production mode
-    secret:'arjungarg',
+    secret:"arjungarg",
     saveUninitialized:false,
     resave:false,
     cookie:{
